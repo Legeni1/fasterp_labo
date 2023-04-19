@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!-- ############################## QUOTES PARTS PAYE############################################# -->
+
+    <record id="tree_labo_quotes_paye_view" model="ir.ui.view">
+        <field name="name">tree.labo.paye_quota.view</field> 
+        <field name="model">labo.paye_quota</field>
+        <field name="arch" type="xml">
+            <tree string="QUOTES PARTS">
+                <field name="name"/>
+                <field name="mois_de_paie"/>
+                <field name="montants"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+      <record id="form_labo_quote_paye_view" model="ir.ui.view">
+          <field name="name">form.labo.paye_quota.view</field>
+          <field name="model">labo.paye_quota</field>
+          <field name="arch" type="xml">
+              <form string="QUOTES PARTS">
+                <header>
+                    <button name="print_fact" string="Imprimer Factures" class="oe_highlight" states="valider" type="object"/>
+                    <button name="validation" string="Calcul des quotes-parts" class="oe_highlight" states="brouillon" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="brouillon,valider"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <!--button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_voir_facture"
+                            context="{'default_partner_id': active_id}">
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="montants" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </span>
+                                <span class="o_stat_text">Facturé</span>
+                            </div>
+                        </button-->
+                        <button class="oe_stat_button" type="object" name="action_voir_facture"
+                            icon="fa-pencil-square-o">
+                            <field string="Facture(s)" name="f_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                      <!--div class="oe_title"-->
+                      <div>
+                          <h1>
+                              <field name="name" placeholder="DÉSIGNATION"/>
+                          </h1>
+                          <h3>
+                            <label for="rech" string="Filtrer Par :"/>
+                              <field name="rech"/>
+                          </h3>
+                      </div>
+                     <group>
+                        <field name="mois_de_paie" attrs="{'invisible':[('rech','=','periode')],'required':[('rech','=','mois')]}"/>
+                        <div>
+                            <label for="date_from" string="Du :" attrs="{'invisible':[('rech','=','mois')]}"/>
+                            <field name="date_from" attrs="{'invisible':[('rech','=','mois')],'required':[('rech','=','periode')]}"/>
+                            <label for="date_to" string="Au :" attrs="{'invisible':[('rech','=','mois')]}"/>
+                            <field name="date_to" attrs="{'invisible':[('rech','=','mois')],'required':[('rech','=','periode')]}"/>
+                        </div>
+                        <field name="montants"/>
+                      </group>
+                      <group string="Notes">
+                          <field name="notes" nolabel="1"/>
+                      </group>
+                      <group string="Quote-Parts">
+                          <field name="quota_ids" nolabel="1"/>
+                      </group>
+                  </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+              </form>
+          </field>
+      </record>
+
+      <record id="action_view_labo_paye_quote" model="ir.actions.act_window">
+          <field name="name">Quotes Parts</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">labo.paye_quota</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+              <!-- Add Text Here -->
+            </p><p>
+              <!-- More details about what a user can do with this object will be OK -->
+            </p>
+          </field>
+      </record>
+
+
+<!-- ############################## QUOTES PARTS ############################################# -->
+
+    <record id="tree_labo_quotes_view" model="ir.ui.view">
+        <field name="name">tree.labo.quote.view</field> 
+        <field name="model">labo.quote</field>
+        <field name="arch" type="xml">
+            <tree string="QUOTES PARTS">
+                <field name="date"/>
+                <field name="medecin_id"/>
+                <field name="request_id"/>
+                <field name="montant"/>
+            </tree>
+        </field>
+    </record>
+
+      <record id="form_labo_quote_view" model="ir.ui.view">
+          <field name="name">form.labo.quote.view</field>
+          <field name="model">labo.quote</field>
+          <field name="arch" type="xml">
+              <form string="QUOTES PARTS">
+                <sheet>
+                      <div class="oe_title">
+                          <h1>
+                              <field name="name" placeholder="DÉSIGNATION"/>
+                          </h1>
+                      </div>
+                     <group col="4">
+                        <field name="medecin_id"/>
+                        <field name="montant"/>
+                        <field name="request_id"/>
+                        <field name="paye"/>
+                        <field name="date"/>
+                      </group>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+
+      <record id="action_view_labo_quote" model="ir.actions.act_window">
+          <field name="name">Quotes Parts</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">labo.quote</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+              <!-- Add Text Here -->
+            </p><p>
+              <!-- More details about what a user can do with this object will be OK -->
+            </p>
+          </field>
+      </record>
+
+        <record id="seq_quote_action" model="ir.sequence">
+            <field name="name">CRM Quote</field>
+            <field name="code">labo.quote</field>
+            <field name = "active">TRUE</field>
+            <field name="prefix">QT/%(y)s/</field>
+            <field name="padding">7</field>
+            <!--field name = "number_next"> 1 </field-->
+            <field name = "number_increment"> 1 </field>
+        </record>
+
+
+
+
+        <record id="view_quote_pivot" model="ir.ui.view">
+        <field name="name">Quotes-parts</field>
+        <field name="model">labo.quote</field>
+        <field name="arch" type="xml">
+            <pivot string="Pivot View">
+                <field name="medecin_id" type="row"/>
+                <field name="date" interval="day" type="col"/>
+                <field name="montant" type="measure" />
+            </pivot>
+        </field>
+        </record>
+
+        <record id="action_pivot_labo_quote" model="ir.actions.act_window">
+            <field name="name">Evolution des Quotes-Parts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">labo.quote</field>
+            <field name="view_mode">pivot</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+                </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

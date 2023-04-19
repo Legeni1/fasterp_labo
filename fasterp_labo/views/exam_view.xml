@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!-- ############################## EXAMENS ############################################# -->
+
+    <record id="tree_crm_examen_view" model="ir.ui.view">
+        <field name="name">tree.crm.examen.view</field>
+        <field name="model">crm.examen</field>
+        <field name="arch" type="xml">
+            <tree string="EXAMEN">
+            
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="lst_price"/>
+                <field name="standard_price"  string="Quote-part"/>
+            </tree>
+        </field>
+    </record>
+
+      <record id="form_crm_examen_view" model="ir.ui.view">
+          <field name="name">form.crm.examen.view</field>
+          <field name="model">crm.examen</field>
+          <field name="arch" type="xml">
+              <form string="EXAMEN">
+                <sheet>
+                      <field name="image_1920" widget='image' class="oe_avatar"/>
+
+
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Nom de l'examen"/>
+                        <h1><field name="name" placeholder="Nom de l'examen"/></h1>
+                        <label class="oe_edit_only" for="code" string="Code de l'examen"/>
+                        <h2><field name="code" placeholder="Code de l'examen"/></h2>
+                        <div name="options" groups="base.group_user">
+                            <div>
+                                <field name="sale_ok" default="1"/>
+                                <label for="sale_ok"/>
+                            </div>
+                        </div>
+                    </div>
+                    <notebook>
+                        <page string=" Informations Générales" name="general_information">
+                            <group>
+                                <group name="group_general">
+                                    <field name="active" invisible="1" />
+                                    <field name="type" default="service" invisible="1"/>
+                                    <field name="categ_id" string="Product Category" default="service" invisible="1"/>
+                                    <field name="lst_price" class="oe_inline" widget='monetary'
+                                        options="{'currency_field': 'currency_id', 'field_digits': True}" required="1"/>
+                                    <field name="category_id"/>
+                                    <!--field name="quota"/-->
+                                    <field name="standard_price" required="1" string="Quote-part"/>
+                                    <field name="nom"  invisible="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Comptes rendus">
+
+                            <group>
+								<field name="rendu_ids" widget="many2many_tags" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+
+      <record id="action_view_crm_examen" model="ir.actions.act_window">
+          <field name="name">EXAMEN</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">crm.examen</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+              <!-- Add Text Here -->
+            </p><p>
+              <!-- More details about what a user can do with this object will be OK -->
+            </p>
+          </field>
+      </record>
+
+<!-- ############################## TYPE EXAMENS ############################################# -->
+
+<!-- ############################## COMPTE RENDU ############################################# -->
+
+    <record id="tree_crm_rendu_view" model="ir.ui.view">
+        <field name="name">tree.crm.compte_rendu.view</field>
+        <field name="model">crm.compte_rendu</field>
+        <field name="arch" type="xml">
+            <tree string="COMPTE  RENDU">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="exam_id"/>
+            </tree>
+        </field>
+    </record>
+
+      <record id="form_crm_rendu_view" model="ir.ui.view">
+          <field name="name">form.crm.rendu.view</field>
+          <field name="model">crm.compte_rendu</field>
+          <field name="arch" type="xml">
+              <form string="Compte Rendu">
+                <sheet>
+                      <div class="oe_title">
+                        <h1>
+                            <label class="oe_edit_only" for="name" string="Désignation"/>
+                            <field name="name" placeholder="DÉSIGNATION"/>
+                        </h1>
+                        <h2>
+                            <label class="oe_edit_only" for="code" string="Code"/>
+                            <field name="code" placeholder="Code"/>
+                        </h2>
+                      </div>
+                     <group>
+                        <field name="exam_id"/>
+                        <field name="nom"  invisible="1"/>
+                        <field name="category_id" invisible="1"/>
+                      </group>
+                        <notebook>
+                          <page string="Technique">
+                              <field name="technique"/>
+                          </page>
+                            <page string="Résultats">
+                                <field name="resultat"/>
+                            </page>
+                            <page string="Conclusion">
+                                <field name="conclusion"/>
+                            </page>
+                        </notebook>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+
+      <record id="action_view_crm_rendu" model="ir.actions.act_window">
+          <field name="name">Comptes Rendus</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">crm.compte_rendu</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+              <!-- Add Text Here -->
+            </p><p>
+              <!-- More details about what a user can do with this object will be OK -->
+            </p>
+          </field>
+      </record>
+<!-- ############################## TYPE EXAMENS ############################################# -->
+
+<!-- ############################## QUOTES PARTS ############################################# -->
+
+
+
+</data>
+</odoo>

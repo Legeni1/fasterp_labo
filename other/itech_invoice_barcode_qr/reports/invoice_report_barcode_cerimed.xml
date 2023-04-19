@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template
+		id="inherited_invoice_report_barcode_cerimed1"
+		inherit_id="cerimed.report_facture_cons">
+		<xpath expr="//h4" position="after">
+			<div class="row justify-content-end mb16">
+				<div class="col-4" name="right_box">
+					<t t-if="o.company_id.print_barcode">
+						<img
+							t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.code, 600, 100)"
+							style="width:100%;height:20%;" alt="Barcode" />
+							<span t-field="o.code"/>
+ 					</t>
+				</div>
+
+				<div style="width:700px; height:110px;float:left;">
+						<t t-if="o.company_id.print_qr">
+								<div style="width:100px;height:100px;float:left;">
+										<span t-field="o.qr_code_image" t-options='{"widget": "image"}' />
+								</div>
+						 </t>
+				</div>
+				</div>
+		</xpath>
+	</template>
+</odoo>

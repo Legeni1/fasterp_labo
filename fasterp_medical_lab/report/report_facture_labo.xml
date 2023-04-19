@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <report
+        file="fasterp_medical_lab.report_facture_labo_multi"
+        name="fasterp_medical_lab.report_facture_labo_multi"
+        report_type="qweb-pdf"
+        string="Facture pour cet Examen"
+        model="consultation.labo"
+        id="action_fact_exams_labo_multi"
+      />
+        <record id="action_fact_exams_labo_multi" model="ir.actions.report">
+            <field name="paperformat_id" ref="fasterp_medical_lab.paperformat_portrait_ss"/>
+        </record>
+      <template id="report_facture_labo_multi">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+            <br></br>
+                <div class="page">
+                        <table style="width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td align="left" style="width:50%;">
+                                        <p align="left" style="font-size:medium"> <b>LABO BIOTECHNOLOGIE</b>
+                                        <br/> Tél. : 6 7000 00 0 0  / 6 700 88 2 200
+                                        <br/>DOUALA [CAMEROUN] </p>
+
+                                        <!--  -->
+                                        <div class="row justify-content-end mb16">
+                                  				<div class="col-4" name="right_box">
+                                  					<!-- <t t-if="o.company_id.print_barcode"> -->
+                                  						<!-- <img
+                                  							t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.code, 600, 100)"
+                                  							style="width:100%;height:20%;" alt="Barcode" /> -->
+                                   					<!-- </t> -->
+                                  				</div>
+                                  			</div>
+
+                                        <!--  -->
+                                    </td>
+                                    <td align="right" style="width:50%;">
+                                      <p style="font-size:medium">Date : <span t-field="o.write_date"/>
+                                      <br/><span style="font-size:small">Situé en face TOTAL LOGBABA</span></p>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <!--  -->
+                        <!--  -->
+	                    <h6 style="text-align: center;">ORDRE DE RECETTE N° : <span t-esc="o.name"/></h6>
+                      <h6 style="text-align: center;">FACTURE EXAMEN N° : <span t-field="o.name"/>  [<span t-esc="round(o.prix_total,0)"/>  Francs CFA]</h6>
+                      <h6 style="text-align: left;"><span t-field="o.nom_p"/></h6>
+                      <h6 style="text-align: left;">Montant paye EN ESPECE (FRANCS CFA) : <span t-esc="round(o.prix_total,0)"/>  [<span t-esc="round(o.prix_total,0)"/>]</h6>
+                        <table style="width:100%;">
+
+                        <!-- Debut -->
+                          <thead style="font-size: medium;">                
+                                            <th align="center" style="padding:2px; border-top: 1px solid black;border-right: 1px solid black; padding-left: 2mm;">Désignation Examen</th>
+                                            <th align="center" style="padding:2px; border-top: 1px solid black;border-right: 1px solid black; padding-left: 2mm;">Prix </th>
+                                            <th align="center" style="padding:2px; border-top: 1px solid black;border-right: 1px solid black; padding-left: 2mm;">Ref/Code</th>
+                                        </thead>
+                                    <tbody>
+                                        <tr style="font-size: small;" t-foreach="o.consultation_labo_line" t-as="q" >
+                                            <td align="center" style="padding:2px; border-top: 1px solid black;border-right: 1px solid black; padding-left: 2mm;" ><span t-raw="'%s' % q.exam_id.lab_test" /></td>
+                                            <td align="center" style="padding:2px; border-top: 1px solid black;border-right: 1px solid black; padding-left: 2mm;"><span t-raw="'%s' % q.prix" /></td>
+                                            <td align="center" style="padding:2px; border-top: 1px solid black;border-right: 1px solid black; padding-left: 2mm;"><span t-raw="'%s' % q.code" /></td>
+                                        </tr>
+                                        <tr>
+                                          <td align="left" style="width:60%;">
+                                          <p align="left" style=""> <b>Examen démandé par :</b>
+                                          <br/> <span t-field="o.medecin_id.nom"/></p>
+                                          
+                                          </td>
+                                          <td align="right" style="width:40%;">
+                                            <p> Caisse
+                                            <br/>BIOTECHNOLOGIE</p>
+                                          </td>
+                                        </tr>
+                                    </tbody>
+
+                        <!-- Fin  -->
+                            <!-- <tbody>
+                                
+                            </tbody> -->
+                        </table>
+                 </div>
+                    <span style="font-size:small; margin-top: 100px;text-align: right;"> Date Impression : <span t-field="o.write_date"/></span>
+            </t>
+            </t>
+        </template>
+    </data>
+</odoo>

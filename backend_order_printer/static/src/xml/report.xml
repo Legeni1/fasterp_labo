@@ -1,0 +1,8 @@
+<template>
+    <t t-name="report.client_action.ControlButtons.New">
+        <div class="o_report_buttons">
+            <button type="button" class="btn btn-primary o_report_print" title="Print PDF">Print PDF</button>
+            <button type="button" class="btn btn-primary o_report_print_now" title="Print Now">Print Now</button>
+        </div>
+    </t>
+</template>

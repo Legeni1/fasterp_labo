@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!-- ############################## Patient ############################################# -->
+
+    <record id="tree_crm_consultation_view" model="ir.ui.view">
+        <field name="name">tree.crm.consultation.view</field>
+        <field name="model">crm.consultation</field>
+        <field name="arch" type="xml">
+            <tree string="Consultation">
+                <field name="consultation_multi_id"/>
+                <field name="code"/>
+                <field name="patient_id"/>
+                <field name="exam_id"/>
+                <field name="date"/>
+                <field name="prix" sum="Prix"/>
+                <field name="exam_familly" />
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+      <record id="form_crm_consultation_view" model="ir.ui.view">
+          <field name="name">form.crm.consultation.view</field>
+          <field name="model">crm.consultation</field>
+          <field name="arch" type="xml">
+              <form string="Consultation">
+                <header>
+                    <button name="print_fact" string="Imprimer Reçu" class="oe_highlight" states="facturer" type="object"/>
+                    <button name="facturation" string="Facturer" class="oe_highlight" states="brouillon" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="brouillon,facturer"/>
+                </header>
+                <sheet>
+                      <div class="oe_title">
+                      <group col="2">
+                          <field name="consultation_multi_id" string= "Facture" invisible='0'/>
+                      </group>   
+                          <h2>
+                              <field name="code" />
+                          </h2>
+                          <field name="titre" placeholder="Titre"/>
+                          <h1>
+                              <field name="nom_p" placeholder="Nom et Prenom du Patient"/>
+                          </h1>
+                        <label class="oe_edit_only" for="age" string="Age du patient"/>
+                          <h2>
+                              <field name="age" />
+                          </h2>
+                      </div>
+                      <group col="4">
+			            <field name="company_id" invisible='1'/>
+                        <field name="exam_id"/>
+                        <field name="category_id"/>
+                        <field name="exam_familly" />
+                        <field name="medecin_id"/>
+                        <field name="prix"/>
+                        <field name="date"/>
+                        <field name="noms" invisible='1'/>
+                      </group>
+                  </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+              </form>
+          </field>
+      </record>
+        <!-- Sequences for Consultation -->
+        <record id="seq_consultation_action" model="ir.sequence">
+            <field name="name">CRM Consultation</field>
+            <field name="code">crm.consultation</field>
+            <field name = "active">TRUE</field>
+            <field name="prefix">EX/%(y)s/</field>
+            <field name="padding">7</field>
+            <!--field name = "number_next"> 1 </field-->
+            <field name = "number_increment"> 1 </field>
+        </record>
+        <record id="consul_search" model="ir.ui.view">
+            <field name="name">Recherche Consultation</field>
+            <field name="model">crm.consultation</field>
+            <field name="arch" type="xml">
+                <search string="Search Consultation">
+                    <filter string="Consultation à Effectuer" name="nouvelle_consultation" domain="[('state','=','brouillon')]"/>
+                    <filter string="Consultations Annulées" name="consultation_annule" domain="[('state','=','annuler')]"/>
+                    <filter string="Consultations Facturées" name="consultation_facture" domain="[('state','=','facturer')]"/>
+                    <field name="patient_id"/>
+                    <field name="state"/>
+                    <field name="create_date"/>
+                      <group expand="0" string="Grouper par">
+                          <filter name="group_by_patient" string="Patient" context="{'group_by': 'patient_id'}"/>
+                          <filter name="group_by_date" string="Date" context="{'group_by': 'create_date'}"/>
+                          <filter name="group_by_state" string="Etat" context="{'group_by': 'state'}"/>
+                      </group>
+            </search>
+            </field>
+        </record>
+
+      <record id="action_view_crm_consultation" model="ir.actions.act_window">
+          <field name="name">Consultation</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">crm.consultation</field>
+          <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="consul_search"/>
+        <field name="context">{'search_default_nouvelle_consultation':1}</field>
+          <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+              <!-- Add Text Here -->
+            </p><p>
+              <!-- More details about what a user can do with this object will be OK -->
+            </p>
+          </field>
+      </record>
+
+<!-- *******************VUE pivot consultation***************************-->
+
+        <record id="view_cons_pivot" model="ir.ui.view">
+        <field name="name">Chiffre d'affaire</field>
+        <field name="model">crm.consultation</field>
+        <field name="arch" type="xml">
+            <pivot string="Pivot View">
+                <field name="exam_id" type="row"/>
+                <field name="date" interval="day" type="col"/>
+                <field name="prix" type="measure" />
+            </pivot>
+        </field>
+        </record>
+
+
+
+        <record id="action_pivot_crm_consuls" model="ir.actions.act_window">
+            <field name="name">Chiffre d'affaire Journalier</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.consultation</field>
+            <field name="view_mode">pivot</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+                </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+
+<!-- ############################## Examen ############################################# -->
+
+    <record id="tree_crm_lab_test_view" model="ir.ui.view">
+        <field name="name">tree.crm.lab_test.view</field>
+        <field name="model">crm.lab_test</field>
+        <field name="arch" type="xml">
+            <tree string="Examens/Tests">
+                <field name="consultation_multi_id"/>
+                <field name="code"/>
+                <field name="exam_id"/>
+                <field name="patient_id"/>
+                <field name="age"/>
+                <field name="name"/>
+                <field name="ref_paye"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+      <record id="form_crm_lab_test_view" model="ir.ui.view">
+          <field name="name">form.crm.lab_test.view</field>
+          <field name="model">crm.lab_test</field>
+          <field name="arch" type="xml">
+              <form string="Examen/Test">
+                <header>
+                    <button name="print_test" string="Imprimer le compte rendu" class="oe_highlight" states="valider" type="object"/>
+                    <button name="validation" string="Realiser" class="oe_highlight" states="brouillon" type="object"/>
+                    <button name="cancel" string="Annuler" class="oe_highlight" states="brouillon" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="brouillon,valider"/>
+                </header>
+                <sheet>
+                      <div class="oe_title">
+                          <h1>
+                              <field name="name" placeholder="Renseignements cliniques" required="1"/>
+                          </h1>
+                      </div>
+                      <group col="4">
+                        <field name="code"/>
+                        <field name="patient_id"/>
+                        <field name="exam_id"/>
+                        <field name="medecin_part"/>
+                        <field name="medecin_in"/>
+                        <field name="date"/>
+                        <field name="ref_paye"/>
+                        <field name="prix"/>
+                        <field name="consultation_id" invisible="1"/>
+                        <field name="consultation_multi_id" invisible="1"/>
+                        <field name="category_id" invisible="1"/>
+                        <field name="rendu_id" domain="[('category_id','=',category_id)]"/>
+                      </group>
+                        <notebook>
+                            <page string="Résultats">
+                                <field name="resultat"/>
+                            </page>
+                            <page string="Conclusion">
+                                <field name="conclusion"/>
+                            </page>
+                            <page string="Autre">
+                                <group col="4">
+                                  <field name="exam_barcode" string="Code bar"/>
+                                  <field name="motif_annulation" string="Motif de l'annulation :"/>
+                                </group>
+                            </page>
+
+                        </notebook>
+                  </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+              </form>
+          </field>
+      </record>
+
+      <!-- <record id="lab_test_search_view_10" model="ir.ui.view">
+          <field name="name">Recherche Examen</field>
+          <field name="model">crm.lab_test</field>
+          <field name="arch" type="xml">
+              <search string="Search Examen">
+                  <filter string="Consultations Annulées" name="consultation_annule1" domain="[('state','=','annuler')]"/>
+                  <filter string="Consultations Facturées" name="consultation_facture1" domain="[('state','=','facturer')]"/>
+          </search>
+          </field>
+      </record> -->
+
+      <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+          <!-- <record id="search_crm_lab_test_view_1" model="ir.ui.view">
+             <field name="name">search.crm.lab_test.view1</field>
+             <field name="model">crm.lab_test</field>
+             <field name="arch" type="xml">
+                 <search string="Recherche Examen">
+                   <field name="code"/>
+                   <field name="exam_id"/>
+                   <field name="patient_id"/>
+                     <group expand="0" string="Grouper par">
+                         <filter name="group_by_patient" string="Patient" context="{'group_by': 'patient_id'}"/>
+                     </group>
+                     <searchpanel>
+                         <field name="patient_id" string="Patient" icon="fa-users"/>
+                         <field name="exam_id" string="Code Exam" icon="fa-users"/>
+                     </searchpanel>
+                 </search>
+             </field>
+      </record> -->
+      <!-- +++++++++++++++++++++FIN++++++++++++++++++++++++++++++++++++ -->
+
+        <!-- Sequences for Consultation >
+        <record id="seq_lab_tesys_action" model="ir.sequence">
+            <field name="name">CRM TESTS</field>
+            <field name="code">crm.lab_test</field>
+            <field name = "active">TRUE</field>
+            <field name="prefix">EX/20/</field>
+            <field name="padding">7</field>
+            <field name = "number_next"> 1 </field>
+            <field name = "number_increment"> 1 </field>
+        </record-->
+        <record id="lab_search" model="ir.ui.view">
+            <field name="name">Recherche Laboratoire</field>
+            <field name="model">crm.lab_test</field>
+            <field name="arch" type="xml">
+                <search string="Search Lab">
+                    <filter string="Examens facturés" name="nouveau_compte_rendu" domain="[('state','=','brouillon')]"/>
+                    <filter string="Examens réalisés" name="effectue_compte_rendu" domain="[('state','=','valider')]"/>
+                    <filter string="Examens non réalisés" name="effectue_compte_rendu" domain="[('state','=','valider')]"/>
+                    <filter string="Examens annulés" name="annuler_compte_rendu" domain="[('state','=','annuler')]"/>
+                    <field name="consultation_multi_id" string="Facture"/>
+                    <field name="code" string="Code Exam"/>
+                    <field name="exam_id"/>
+                    <field name="patient_id"/>
+                    <field name="state"/>
+                    <field name="create_date"/>
+                      <group expand="0" string="Grouper par">
+                          <filter name="group_by_patient" string="Patient" context="{'group_by': 'patient_id'}"/>
+                          <filter name="group_by_date" string="Date" context="{'group_by': 'create_date'}"/>
+                          <filter name="group_by_state" string="Etat" context="{'group_by': 'state'}"/>
+                      </group>
+                      <searchpanel>
+                          <!-- <field name="patient_id" string="Patient" /> -->
+                          <field name="exam_id" string="Liste par examen" />
+                      </searchpanel>
+            </search>
+            </field>
+        </record>
+
+      <record id="action_view_crm_lab_tests" model="ir.actions.act_window">
+          <field name="name">Saisie des Comptes Rendus</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">crm.lab_test</field>
+          <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="lab_search"/>
+            <field name="context">{'search_default_nouveau_compte_rendu':1}</field>
+      </record>
+
+<!-- *******************VUE pivot examen***************************-->
+
+        <record id="view_exam_pivot" model="ir.ui.view">
+        <field name="name">Comptabilité des Examens</field>
+        <field name="model">crm.lab_test</field>
+        <field name="arch" type="xml">
+            <pivot string="Pivot View">
+                <!-- <field name="exam_id" type="row"/> -->
+                <field name="state"  type="col"/>
+                <field name="date" interval="day" type="row"/>
+                <field name="prix" type="measure" />
+            </pivot>
+        </field>
+        </record>
+
+
+
+        <record id="action_pivot_crm_examen" model="ir.actions.act_window">
+            <field name="name">Comptabilité Journalière</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.lab_test</field>
+            <field name="view_mode">pivot</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+                </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+<!-- ############################## QUOTES PARTS ############################################# -->
+    </data>
+</odoo>

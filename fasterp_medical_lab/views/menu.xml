@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+           
+
+         
+                
+                 <!-- <menuitem id="menu_labobio_consultation2023" name="Labo" action="action_view_consultation_labo" parent="menu_caisse" sequence="2" groups="group_labo_user_fact"/> -->
+
+              <menuitem id="menu_labo_bio_consultation" name="Facturation Labo" action="action_view_consultation_labo" parent="menu_root_lab" sequence="1" groups="group_lab_management_user"/>
+
+              <menuitem id="menu_salle_tech" name="Salle technique" sequence="1" parent="menu_root_lab"/>
+            <!-- <menuitem id="menu_labo_examens" name="Salle technique" action="action_view_labo_lab_tests" parent="menu_salle_tech" sequence="3" groups="group_labo_cr_user"/> -->
+                <menuitem id="menu_lab_appointment_child_1" name="Rendez vous" sequence="10" parent="menu_salle_tech" action="fasterp_medical_lab.act_open_lab_appointment_view" groups="fasterp_medical_lab.group_lab_management_user,fasterp_medical_lab.group_lab_management_technician"/>
+                <menuitem id="menu_lab_appointment_child_2_1" name=" Rendez vous du jour" sequence="11" groups="fasterp_medical_lab.group_lab_management_user,fasterp_medical_lab.group_lab_management_technician" parent="menu_salle_tech" action="fasterp_medical_lab.act_open_lab_appointment_view_2"/>
+                <menuitem id="menu_lab_request_child_1" name="Paillasse" sequence="12" parent="menu_salle_tech" action="fasterp_medical_lab.act_open_lab_request_view" groups="fasterp_medical_lab.group_lab_management_user,fasterp_medical_lab.group_lab_management_technician"/>		  
+                
+                <menuitem name="Unité de test "
+                    id="test_unit_conf_1"
+                    parent="menu_root_lab"
+                    action="fasterp_medical_lab.act_open_test_unit_view"
+                    groups="group_lab_management_user"
+                    sequence="20" />
+
+                <menuitem id="menu_lab_test_1" name="Examen Labo " sequence="1"
+                  parent="menu_root_lab" action="fasterp_medical_lab.act_open_lab_test_view"
+                  groups="group_lab_management_user"/>
+
+                <menuitem id="menu_lab_content_1" name="COntenu du Test" sequence="10"
+                  parent="menu_root_lab" action="fasterp_medical_lab.act_open_lab_content_view"
+                  groups="group_lab_management_user"/>
+
+                <menuitem id="menu_rendu_labo" name="Compte rendu Labo" parent="menu_root_lab" action="action_view_labo_rendu" sequence="4" groups="group_lab_management_user"/>
+
+
+
+                <!--QUOTES-PARTS Menu-->
+        <menuitem id="menu_paye_quote_parts" name="Quotes Parts" parent="menu_root_lab" action="action_view_labo_paye_quote" sequence="8" groups="group_lab_management_user"/>
+        <!--GESTION Menu-->
+        <menuitem id="menu_gestion" name="Gestion"  parent="menu_root_lab" sequence="14" groups="group_lab_management_user"/> 
+            <menuitem id="menus_ca_jour_exam_labo" name="Compta Quote part" parent="menu_gestion" action="action_pivot_labo_quote" sequence="8" groups="group_lab_management_user"/>
+            <menuitem id="menus_ca_jour_labo" name="Etat Quote Part payé" parent="menu_gestion" action="action_view_labo_paye_quote" sequence="8" groups="group_lab_management_user"/>
+            <menuitem id="menus_quote_jour_labo" name="Evolution des Quotes-parts" parent="menu_gestion" action="action_pivot_labo_quote" sequence="10" groups="group_lab_management_user"/>
+    </data>
+
+
+</odoo>

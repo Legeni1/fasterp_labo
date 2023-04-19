@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="lab_test_add_tube_view" model="ir.ui.view">
+            <field name="name">lab_test.custum_view_form</field>
+            <field name="model">lab.test</field>
+            <field name="inherit_id" ref="fasterp_medical_lab.view_lab_test_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lab_test_code']" position="after">
+                    <field name="familly"  invisible="0"/>
+                    <field name="tube" />
+                </xpath>
+            </field>
+        </record>
+
+       
+    </data>
+</odoo>

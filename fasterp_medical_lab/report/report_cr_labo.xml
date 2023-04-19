@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <report
+        file="fasterp_medical_lab.report_compte_rendu_labo"
+        name="fasterp_medical_lab.report_compte_rendu_labo"
+        report_type="qweb-pdf"
+        string="Compte Rendu pour cet Examen"
+        model="lab.request"
+        id="actionss_compte_rendu_labo"
+      />
+        <record id="actionss_compte_rendu_labo" model="ir.actions.report">
+            <field name="paperformat_id" ref="fasterp_medical_lab.paperformat_portrait_rendu"/>
+        </record>
+      <template id="report_compte_rendu_labo">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div align="center"><h2> COMPTE RENDU D'EXAMEN <span t-raw="'%s' %   o.test_request.lab_test" /></h2></div>
+                        <table style="width:100%; margin-left: 30px;">
+                            <tbody>
+                                <tr>
+                                    <td align="left" style="width:35%;font-weight:600; ">
+                                                        Examen N° :
+                                    </td>
+                                    <td align="left" style="width:30%;">
+                                        <span t-field='o.test_request.lab_test_code'/>
+                                    </td>
+                                    <td align="left" style="width:20%;font-weight:600; ">
+                                                        Date d'examen :
+                                    </td>
+                                    <td align="left" style="width:15%;">
+                                        <span t-field='o.lab_requesting_date' t-options="{'widget':'date'}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="width:35%;font-weight:600; ">
+                                                        Nom du Patient :
+                                    </td>
+                                    <td align="left" style="width:30%;">
+                                        <span t-field="o.app_id.patient_id.patient"/>
+                                    </td>
+                                    <td align="left" style="width:20%;font-weight:600; ">
+                                                        Age :
+                                    </td>
+                                    <td align="left" style="width:15%;">
+                                        <span t-field="o.app_id.patient_id.age" /> ans
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="width:35%;font-weight:600; ">
+                                                        Désignation de l'examen :
+                                    </td>
+                                    <td align="left" colspan="3">
+                                        <span t-field='o.test_request.lab_test'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="width:35%;font-weight:600; ">
+                                                        Renseignements Cliniques :
+                                    </td>
+                                    <td align="left" colspan="3">
+                                        <span t-field='o.name'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="width:35%;font-weight:600; ">
+                                                        Examen démandé par :
+                                    </td>
+                                    <td align="left" colspan="3">
+                                            <span t-field='o.lab_requestor.patient.name'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="width:35%;font-weight:600; ">
+                                                        Formation Sanitaire :
+                                    </td>
+                                    <td align="left" colspan="3">
+                                                <!-- <span t-field='o.medecin_part.hopital.name'/> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <div>
+                        <h3 style=" margin-left: 30px;"><b>TECHNIQUE :</b></h3>
+                        <p style="margin-left: 35px; margin-right: 10px; margin-bottom: 3px; font-size: 16px;">
+                            <span t-field='o.technique'/>
+                        </p>
+                    </div>
+                    <div>
+                        <h3 style=" margin-left: 30px;"><b>RÉSULTATS :</b></h3>
+                        <p style="margin-left: 35px; margin-right: 10px; margin-bottom: 3px; font-size: 16px;">
+                            <span t-field='o.resultat'/>
+                        </p>
+                    </div>
+                    <div>
+                        <h3 style=" margin-left: 30px;"><b>CONCLUSIONS :</b></h3>
+                        <p style="margin-left: 35px; margin-right: 10px; margin-bottom: 3px; font-size: 16px;">
+                            <span t-field='o.conclusion'/>
+                        </p>
+                    </div>
+                    <br/><br/><br/>
+                    <div align="right">
+                        <strong style="margin-right: 20px;"><span t-field="o.lab_requestor.patient.name"/><br/><span t-field="o.lab_requestor.patient.name"/></strong>
+                    </div>
+
+                </div>
+
+                <div class="footer o_standard_footer" style="border-top: 3px solid black;">
+                    <p style="font-size:small;" align="center"> Ouvert du lundi à vendredi de 08H-18H et Samedi de 08H-12H00.
+                    Urgence assurée
+                    <br></br>----->Echographie obstétricale, pelvienne, abdominale, prostatique
+                     <br></br> ------->Cyto-ponctions Drainage Echo-Guidées
+                      <br></br>Date Impression : <span t-field='o.write_date'/></p>
+                </div>
+            </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <report
+        file="fasterp_labo.report_facture_cons"
+        name="fasterp_labo.report_facture_cons"
+        report_type="qweb-pdf"
+        string="Facture pour cet Examen"
+        model="crm.consultation"
+        id="action_fact_exams"
+      />
+        <record id="action_fact_exams" model="ir.actions.report">
+            <field name="paperformat_id" ref="fasterp_labo.paperformat_portrait_ss"/>
+        </record>
+      <template id="report_facture_cons">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+            <br></br>
+                <div class="page">
+                        <table style="width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td align="left" style="width:50%;">
+                                        <p align="left" style="font-size:medium"> <b>fasterp_labo-CENTRE DE RADIOLOGIE,D'IMAGERIE MEDICALE ET DIAGNOSTIQUE</b>
+                                        <br/> Tél. : 6 99 97 41 57 / 6 78 79 44 09
+                                        <br/>YAOUNDÉ [CAMEROUN] </p>
+
+                                        <!--  -->
+                                        <div class="row justify-content-end mb16">
+                                  				<div class="col-4" name="right_box">
+                                  					<!-- <t t-if="o.company_id.print_barcode"> -->
+                                  						<!-- <img
+                                  							t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.code, 600, 100)"
+                                  							style="width:100%;height:20%;" alt="Barcode" /> -->
+                                   					<!-- </t> -->
+                                  				</div>
+                                  			</div>
+
+                                        <!--  -->
+                                    </td>
+                                    <td align="right" style="width:50%;">
+                                      <p style="font-size:medium">Date : <span t-field="o.write_date"/>
+                                      <br/><span style="font-size:small">Situé à la Descente ELig-Efa à côté de la microfinance RENAPROV</span></p>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <!--  -->
+
+                        <!--  -->
+	                    <h6 style="text-align: center;">ORDRE DE RECETTE N° : <span t-esc="o.facture_id.name"/></h6>
+                      <h6 style="text-align: center;">FACTURE EXAMEN N° : <span t-field="o.facture_id.name"/>  [<span t-esc="round(o.prix,0)"/>  Francs CFA]</h6>
+                      <h6 style="text-align: left;"><span t-field="o.patient_id.nom"/></h6>
+                      <h6 style="text-align: left;">Montant paye EN ESPECE (FRANCS CFA) : <span t-esc="round(o.prix,0)"/>  [<span t-esc="round(o.prix,0)"/>]</h6>
+                        <table style="width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td align="left" style="width:60%;">
+                                        <p align="left" style=""> <b>Examen démandé par :</b>
+                                        <br/> <span t-field="o.medecin_id.nom"/>
+                                        <br/><span style="font-size:medium"><span t-field="o.exam_id.name"/>  1 x <span t-esc="round(o.prix,0)"/> = <span t-esc="round(o.prix,0)"/></span> </p>
+                                    </td>
+                                    <td align="right" style="width:40%;">
+                                      <p> Caisse
+                                      <br/>LABO BIOTECHNOLOGIE</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                 </div>
+                    <span style="font-size:small; margin-top: 100px;text-align: right;"> Date Impression : <span t-field="o.write_date"/></span>
+            </t>
+            </t>
+        </template>
+    </data>
+</odoo>

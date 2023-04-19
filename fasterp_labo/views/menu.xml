@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Menu Root  -->
+        <menuitem id="menu_crm_root_action" name="FAST ERP Laboratoire" sequence="0"/>
+        <!--Caisse Menu-->
+        <menuitem id="menu_caisse" name="Caisse" sequence="1" parent="menu_crm_root_action"/>
+        <!-- <menuitem id="menu_crm_consultation" name="Imagerie" action="action_view_crm_consultation" parent="menu_caisse" sequence="1" groups="group_crm_user_fact"/> -->
+
+        <menuitem id="menu_crm_multi_consultation" name="Imagerie multi" action="action_view_crm_multi_consultation" parent="menu_caisse" sequence="2" groups="group_crm_user_fact"/>
+
+        <!-- <menuitem id="menu_labobio_consultation2023" name="Labo" action="action_view_consultation_labo" parent="menu_caisse" sequence="2" groups="group_crm_user_fact"/> -->
+
+        
+
+        <!-- Saisie CR Imagerie -->
+		 <menuitem id="menu_crm_examens" name="Comptes Rendus imagerie" action="action_view_crm_lab_tests" parent="menu_crm_root_action" sequence="3" groups="group_crm_cr_user"/>
+		<!--lab_test Menu-->
+		
+		
+		<!--QUOTES-PARTS Menu-->
+        <menuitem id="menu_paye_quote_parts" name="Quotes Parts" parent="menu_crm_root_action" action="action_view_crm_paye_quote" sequence="8" groups="group_crm_compta_user"/>
+        <!--GESTION Menu-->
+        <menuitem id="menu_gestion" name="Gestion"  parent="menu_crm_root_action" sequence="14" groups="group_crm_compta_user"/> 
+            <menuitem id="menus_ca_jour_exam" name="Compta Examen" parent="menu_gestion" action="action_pivot_crm_examen" sequence="8" groups="group_crm_compta_user"/>
+            <menuitem id="menus_ca_jour" name="Etat journalier" parent="menu_gestion" action="action_pivot_crm_consuls" sequence="8" groups="group_crm_compta_user"/>
+            <menuitem id="menus_quote_jour" name="Evolution des Quotes-parts" parent="menu_gestion" action="action_pivot_crm_quote" sequence="10" groups="group_crm_compta_user"/>
+
+        <!--configuration Menu-->
+        <menuitem id="menu_crm_configurations" name="Configuration" parent="menu_crm_root_action" sequence="20" groups="group_crm_conf_user"/>
+                <!--Partenaires Menu-->
+            <menuitem id="menu_partenair" name="Partenaires" parent="menu_crm_configurations" sequence="2"/>
+                <menuitem id="menu_medecin_partnairs" name="Personnel Médical" parent="menu_partenair" action="action_view_crm_medecins_partn" sequence="2" groups="group_crm_user_lab"/>
+                <menuitem id="menu_hopital" name="Formations Sanitaires" parent="menu_partenair" action="action_view_crm_hopital" sequence="4" groups="group_crm_user_lab"/>
+                <menuitem id="menu_patient" name="Patients" parent="menu_partenair" action="action_view_crm_patient" sequence="6" groups="group_crm_user_lab"/>
+
+
+                <!--Internes Menu-->
+            <menuitem id="menu_personne" name="Personnels" parent="menu_crm_configurations" sequence="3"/>
+                <menuitem id="menu_medecin_ins" name="Médécin Signataire" parent="menu_personne" action="action_view_crm_medecin_in" sequence="2" groups="group_crm_user_lab"/>
+                <!--Examen Menu-->
+            <menuitem id="menu_examen" name="Imagerie" parent="menu_crm_configurations" sequence="6"/>
+                <menuitem id="menu_type_examen" name="Examen Type" parent="menu_examen" action="action_view_crm_examen" sequence="1" groups="group_crm_user_lab"/>
+                <menuitem id="menu_rendu" name="Compte rendu Type" parent="menu_examen" action="action_view_crm_rendu" sequence="4" groups="group_crm_user_lab"/>
+                
+
+            
+    </data>
+</odoo>
